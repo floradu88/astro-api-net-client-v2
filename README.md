@@ -270,6 +270,7 @@ The library follows SOLID principles:
 - **Test Scripts**: See `TEST_SCRIPTS.md` for detailed test script documentation
 - **API Availability Report**: Generated automatically when running API availability tests
 - **Example Usage**: See `AstrologyApiClient/ExampleUsage.cs` for code examples
+- **Article**: See `ARTICLE_Working_Smart_Without_Documentation.md` - Learn how we built this library using test-driven exploration when documentation was unclear
 
 ## License
 

@@ -1,0 +1,66 @@
+fix: resolve 405 errors for general report endpoints and fix 404 for general house report
+
+This commit fixes API availability issues for three general report endpoints
+that were returning 405 (Method Not Allowed) errors due to incorrect data
+format, and resolves a 404 (Not Found) error for the general house report
+endpoint.
+
+## Problem
+- General Ascendant Report, General Sign Report, and General House Report
+  were returning 405 errors with validation messages indicating missing
+  "day" field
+- General House Report was returning 404 error due to missing /tropical suffix
+
+## Root Cause
+The general report endpoints require a "hybrid" data format:
+- Primary person data uses simple field names (day, month, year) instead of
+  prefixed names (p_day, p_month, p_year)
+- Secondary person data uses s_ prefix (s_day, s_month, s_year)
+- This differs from other composite endpoints which use p_ prefix for primary
+
+## Solution
+
+### 1. Added Hybrid Format Converter
+- Added ConvertToHybridFormat() method to FormDataConverter
+- Supports both CompositeBirthData and two BirthData objects overloads
+- Converts primary person to simple format (day/month/year)
+- Keeps secondary person in s_ format (s_day/s_month/s_year)
+
+### 2. Updated API Client Methods
+- Updated GetGeneralAscendantReportAsync to use hybrid format
+- Updated GetGeneralSignReportAsync to use hybrid format
+- Updated GetGeneralHouseReportAsync to use hybrid format
+- Added /tropical suffix to general_house_report endpoint path
+
+### 3. Enhanced Test Coverage
+- Updated tests to use new overloads with two BirthData objects
+- Enhanced error reporting to capture full URLs and responses for 404/405 errors
+- Added detailed error response sections in API availability report
+
+### 4. Documentation
+- Added IMPLEMENTATION_GUIDE.md with comprehensive documentation
+- Added INVESTIGATION_405_Errors.md with problem analysis
+- Updated API_Availability_Report.md with test results
+
+## Results
+- All 28 API endpoints are now accessible (100% success rate)
+- General Ascendant Report: ✅ Fixed (was 405, now working)
+- General Sign Report: ✅ Fixed (was 405, now working)
+- General House Report: ✅ Fixed (was 404, now working)
+
+## Files Changed
+- AstrologyApiClient/AstrologyApiClient.cs
+- AstrologyApiClient/Interfaces/IAstrologyApiClient.cs
+- AstrologyApiClient/Interfaces/IFormDataConverter.cs
+- AstrologyApiClient/Services/FormDataConverter.cs
+- AstrologyApiClient.Tests/ApiAvailabilityTests.cs
+- API_Availability_Report.md
+- README.md
+- IMPLEMENTATION_GUIDE.md (new)
+- INVESTIGATION_405_Errors.md (new)
+
+## Testing
+- All API availability tests passing
+- Verified all three general report endpoints return successful responses
+- Confirmed hybrid format matches API requirements
+

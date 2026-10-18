@@ -10,7 +10,7 @@
     <Company>AstrologyApiClient</Company>
     <Product>AstrologyApiClient</Product>
     <Description>A .NET client library for the Astrology API with credential management</Description>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <PackageId>AstrologyApiClient</PackageId>
     <PackageTags>astrology;api;client;horoscope</PackageTags>
     <RepositoryUrl>https://github.com/yourusername/astro-api-client-v2</RepositoryUrl>
@@ -19,6 +19,10 @@
 
   <ItemGroup>
     <PackageReference Include="System.Text.Json" Version="8.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\API_METHODS_TABLE.md" Pack="true" PackagePath="docs\API_METHODS_TABLE.md" />
   </ItemGroup>
 
 </Project>

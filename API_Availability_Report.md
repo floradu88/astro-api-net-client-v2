@@ -1,6 +1,6 @@
 # API Availability Report
 
-**Generated:** 2025-12-21 18:20:24
+**Generated:** 2026-01-19 12:32:27
 
 ---
 
